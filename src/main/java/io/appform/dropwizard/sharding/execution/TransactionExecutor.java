@@ -18,6 +18,7 @@
 package io.appform.dropwizard.sharding.execution;
 
 import io.appform.dropwizard.sharding.ShardInfoProvider;
+import io.appform.dropwizard.sharding.exceptions.ShardingBundleException;
 import io.appform.dropwizard.sharding.observers.TransactionObserver;
 import io.appform.dropwizard.sharding.utils.TransactionHandler;
 import lombok.val;
@@ -119,7 +120,7 @@ public class TransactionExecutor {
                 if (completeTransaction) {
                     transactionHandler.onError();
                 }
-                throw e;
+                throw new ShardingBundleException("Error in shard: " + shardId, e);
             }
         });
     }
